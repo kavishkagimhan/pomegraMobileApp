@@ -14,7 +14,7 @@ const Login = () => {
         // Assuming successful login, navigate to Home
         navigation.navigate('Home');
     };
-    
+
     const handleForgotPassword = () => {
         // Navigate to ForgotPassword screen
         navigation.navigate('Forgot');

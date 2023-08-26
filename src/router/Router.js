@@ -9,6 +9,10 @@ import Splash from '../screens/Splash';
 import Forgot from '../auth/Forgot';
 import Disease from '../diseases/Disease';
 import FindDisease from '../diseases/FindDisease';
+import Quality from '../quality/Quality';
+import FindQuality from '../quality/FindQuality';
+import DiseaseResult from '../diseases/DiseaseResult';
+import QualityResult from '../quality/QualityResult';
 
 const Stack = createNativeStackNavigator();
 
@@ -23,7 +27,11 @@ const Router = () => {
                 
                 <Stack.Screen name="Forgot" component={Forgot} />
                 <Stack.Screen name="Disease" component={Disease} />
-                <Stack.Screen name="Find" component={FindDisease} />
+                <Stack.Screen name="FindDisease" component={FindDisease} />
+                <Stack.Screen name="Quality" component={Quality} />
+                <Stack.Screen name="FindQualiry" component={FindQuality} />
+                <Stack.Screen name="DiseaseResult" component={DiseaseResult} />
+                <Stack.Screen name="QualityResult" component={QualityResult} />
             </Stack.Navigator>
         </NavigationContainer>
     )
