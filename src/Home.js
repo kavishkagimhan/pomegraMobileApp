@@ -1,9 +1,14 @@
 import { View, Text, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
-import React from 'react';
+import React, { useContext} from 'react';
 import { useNavigation } from '@react-navigation/core';
+import { AuthContext } from './auth/AuthProvider';
+
 
 const Home = () => {
 
+  const {user} = useContext(AuthContext)
+  const {logout} = useContext(AuthContext);
+  
   const navigation = useNavigation();
 
   const handleDisease = () => {
@@ -28,6 +33,12 @@ const Home = () => {
           </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={() => console.log('Soil button pressed')}>
             <Text style={styles.buttonText}>Soil</Text>
+            <Text>{user.uid}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={() => {
+            console.log("Log out")
+            logout()}}>
+            <Text style={styles.buttonText}>Logout</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>

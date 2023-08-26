@@ -1,12 +1,10 @@
-import { View, Text } from 'react-native'
 import React from 'react'
-import Router from './src/router/Router'
+import Providers from './src/auth/Providers'
+
 
 const App = () => {
   return (
-    
-      <Router/>
-    
+    <Providers/>
   )
 }
 
