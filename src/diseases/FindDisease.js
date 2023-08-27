@@ -22,7 +22,7 @@ const FindDisease = ({ route }) => {
         );
 
         // Perform your Axios post request here
-        const response = await axios.post('http://192.168.8.100:8000/predict', {
+        const response = await axios.post('http://localhost:8000/upload_image', {
           file: resizedImage.uri, // Send the resized image URI to the server
         });
 
