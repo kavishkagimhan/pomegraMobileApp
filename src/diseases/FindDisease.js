@@ -11,6 +11,7 @@ const FindDisease = ({ route }) => {
     if (imageUri) {
       try {
         setIsLoading(true);
+        
 
         // Resize the image to 256x256
         const resizedImage = await ImageResizer.createResizedImage(
