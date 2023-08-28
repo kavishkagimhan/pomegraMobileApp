@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { useNavigation } from '@react-navigation/core';
+import LinearGradient from 'react-native-linear-gradient';
+import Camera from 'react-native-vector-icons/AntDesign';
+import Gallery from 'react-native-vector-icons/FontAwesome';
 
 export default function Disease() {
 
@@ -45,52 +48,31 @@ export default function Disease() {
     };
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.heading}>Select Disease Image</Text>
-            <TouchableOpacity style={styles.pickImageButton} onPress={handleLaunchCamera}>
-                <Text style={styles.buttonText}>Launch Camera</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.pickImageButton} onPress={handleLaunchImageLibrary}>
-                <Text style={styles.buttonText}>Pick from Gallery</Text>
-            </TouchableOpacity>
+        <View className="h-screen">
+            <LinearGradient
+                style={{ elevation: 10 }}
+                colors={['#DE1B55', '#F67A92']} className="bg-primary h-[30vh] rounded-b-3xl items-center justify-center" >
+                <Text className="text-3xl text-white ">Identify Leaf Diseases</Text>
+                <Text className="p-4 text-lg text-center text-white fint-light">Take photos, diagnose diseases, and learn how to treat them. </Text>
+            </LinearGradient>
+            <View className="flex items-center justify-center gap-4 mt-16">
+                <LinearGradient style={{ elevation: 10 }} colors={['#059669', '#34d399']} className="px-4 py-2 rounded-xl w-[250px] items-center">
+                    <TouchableOpacity onPress={handleLaunchCamera} className="flex-row items-center gap-4">
+                        <Camera name="camera" color="white" size={20} />
+                        <Text className="text-lg text-white">Take a Photo</Text>
+                    </TouchableOpacity>
+                </LinearGradient>
+
+                <LinearGradient style={{ elevation: 10 }} colors={['#059669', '#34d399']} className="px-4 py-2 rounded-xl w-[250px] items-center">
+                    <TouchableOpacity onPress={handleLaunchImageLibrary} className="flex-row items-center gap-4">
+                        <Gallery name="photo" color="white" size={20} />
+                        <Text className="text-lg text-white">Upload from gallery</Text>
+                    </TouchableOpacity>
+                </LinearGradient>
+            </View>
+
         </View>
     );
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#f0f0f0',
-    },
-    heading: {
-        fontSize: 28,
-        fontWeight: 'bold',
-        marginBottom: 20,
-        color: '#333',
-    },
-    image: {
-        width: 200,
-        height: 200,
-        resizeMode: 'cover',
-        marginBottom: 20,
-    },
-    noImageText: {
-        fontSize: 18,
-        color: '#777',
-        marginBottom: 20,
-    },
-    pickImageButton: {
-        backgroundColor: '#007bff',
-        paddingVertical: 10,
-        paddingHorizontal: 20,
-        borderRadius: 8,
-        marginTop: 10,
-    },
-    buttonText: {
-        color: '#fff',
-        fontSize: 16,
-        fontWeight: 'bold',
-    },
-});
+

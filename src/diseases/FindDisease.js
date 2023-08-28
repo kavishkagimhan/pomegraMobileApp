@@ -2,6 +2,8 @@ import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import React, { useState } from 'react';
 import ImageResizer from 'react-native-image-resizer';
 import axios from 'axios';
+import LinearGradient from 'react-native-linear-gradient';
+import Find from 'react-native-vector-icons/AntDesign';
 
 const FindDisease = ({ route }) => {
   const { imageUri } = route.params;
@@ -26,7 +28,7 @@ const FindDisease = ({ route }) => {
           file: resizedImage.uri, // Send the resized image URI to the server
         });
 
-  
+
 
         // Handle the response from the server
         console.log('Response from server:', response);
@@ -39,62 +41,34 @@ const FindDisease = ({ route }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.heading} className='p-4 bg-red-300 teext-4xl'>Find Disease</Text>
+    <View className="flex items-center">
+      <LinearGradient
+        style={{ elevation: 10 }}
+        colors={['#DE1B55', '#F67A92']} className="bg-primary h-[30vh] rounded-b-3xl items-center justify-center w-screen" >
+        <Text className="text-3xl text-white ">Find Your Leaf Diseases</Text>
+        <Text className="p-4 text-lg text-center text-white fint-light">Now Click Find Disease Button.  </Text>
+      </LinearGradient>
       {imageUri ? (
-        <Image source={{ uri: imageUri }} style={styles.image} />
+        <View className="p-4 rounded-full ">
+          <Image source={{ uri: imageUri }} className='w-[256px] h-[256px] ' />
+        </View>
+
       ) : (
         <Text style={styles.noImageText}>No Image Selected</Text>
       )}
-      <TouchableOpacity
-        style={styles.findDiseaseButton}
-        onPress={handleFindDisease}
-        disabled={isLoading}
-      >
-        <Text style={styles.buttonText}>
-          {isLoading ? 'Finding Disease...' : 'Find Disease'}
-        </Text>
-      </TouchableOpacity>
+
+      <LinearGradient style={{ elevation: 10 }} colors={['#059669', '#34d399']} className="px-4 py-2 rounded-xl w-[250px] items-center">
+        <TouchableOpacity onPress={handleFindDisease} disabled={isLoading} className="flex-row items-center gap-4">
+          <Find name="search1" color="white" size={20} />
+          <Text className="text-lg text-white">
+            {isLoading ? 'Finding Disease...' : 'Find Disease'}
+          </Text>
+        </TouchableOpacity>
+      </LinearGradient>
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#f0f0f0',
-  },
-  heading: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    marginBottom: 20,
-    color: '#333',
-  },
-  image: {
-    width: 200,
-    height: 200,
-    resizeMode: 'cover',
-    marginBottom: 20,
-  },
-  noImageText: {
-    fontSize: 18,
-    color: '#777',
-    marginBottom: 20,
-  },
-  findDiseaseButton: {
-    backgroundColor: '#007bff',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 8,
-    marginTop: 10,
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-});
+
 
 export default FindDisease;
