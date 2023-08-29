@@ -1,18 +1,23 @@
-import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import React, { useState } from 'react';
+import { View, Text, Image, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import ImageResizer from 'react-native-image-resizer';
-import axios from 'axios';
 import LinearGradient from 'react-native-linear-gradient';
 import Find from 'react-native-vector-icons/AntDesign';
+import { useNavigation } from '@react-navigation/core';
 
 const FindDisease = ({ route }) => {
   const { imageUri } = route.params;
+  const navigation = useNavigation();
   const [isLoading, setIsLoading] = useState(false);
+  const [res, setRes] = useState('');
+  const [res2, setRes2] = useState('');
+  const [error, setError] = useState(null);
 
   const handleFindDisease = async () => {
     if (imageUri) {
       try {
         setIsLoading(true);
+        setError(null);
 
         // Resize the image to 256x256
         const resizedImage = await ImageResizer.createResizedImage(
@@ -20,31 +25,54 @@ const FindDisease = ({ route }) => {
           256,
           256,
           'JPEG',
-          80
+          100,
+          0,
+          undefined,
+          false,
+          { mode: 'contain', onlyScaleDown: false }
         );
-
-        // Perform your Axios post request here
-        const response = await axios.post('http://192.168.8.100:8000/predict', {
-          file: resizedImage.uri, // Send the resized image URI to the server
+        const filename = imageUri.split('/').pop() || 'default.jpg';
+        const data = new FormData();
+        data.append('file', {
+          uri: resizedImage.uri,
+          name: filename,
+          type: 'image/jpg',
         });
 
+        const backendURL = 'http://192.168.60.120:8000';
 
+        const response = await fetch(`${backendURL}/predict`, {
+          method: 'POST',
+          body: data,
+        });
+        const responseData = await response.json();
 
-        // Handle the response from the server
-        console.log('Response from server:', response);
+        if (responseData) {
+          const validate = responseData.class_model_1;
+          if (validate === "Diseases") {
+            navigation.navigate('DiseaseResult', { validate: validate, disease: responseData.class_model_2 });
+          } else {
+            navigation.navigate('DiseaseResult', { validate: validate, disease: "null" });
+          }
+        } else {
+          setError('Invalid response from the server');
+        }
+
       } catch (error) {
         console.error('Error:', error);
+        setError('An error occurred while finding the disease.');
       } finally {
         setIsLoading(false);
       }
     }
   };
 
+
   return (
     <View className="flex items-center">
       <LinearGradient
         style={{ elevation: 10 }}
-        colors={['#DE1B55', '#F67A92']} className="bg-primary h-[30vh] rounded-b-3xl items-center justify-center w-screen" >
+        colors={['#DE1B55', '#F67A92']} className="bg-primary h-[20vh] rounded-b-3xl items-center justify-center w-screen" >
         <Text className="text-3xl text-white ">Find Your Leaf Diseases</Text>
         <Text className="p-4 text-lg text-center text-white fint-light">Now Click Find Disease Button.  </Text>
       </LinearGradient>
@@ -52,7 +80,6 @@ const FindDisease = ({ route }) => {
         <View className="p-4 rounded-full ">
           <Image source={{ uri: imageUri }} className='w-[256px] h-[256px] ' />
         </View>
-
       ) : (
         <Text style={styles.noImageText}>No Image Selected</Text>
       )}
@@ -65,10 +92,29 @@ const FindDisease = ({ route }) => {
           </Text>
         </TouchableOpacity>
       </LinearGradient>
+
+      {res && <Text className="text-lg font-semibold text-black ">{res}</Text>}
+      {res2 && <Text className="text-lg font-semibold text-black ">{res2}</Text>}
+
+      {error && (
+        <Text style={styles.errorText}>{error}</Text>
+      )}
     </View>
   );
 };
 
-
+const styles = StyleSheet.create({
+  noImageText: {
+    textAlign: 'center',
+    marginTop: 20,
+    fontSize: 16,
+  },
+  errorText: {
+    color: 'red',
+    fontSize: 16,
+    marginTop: 10,
+    textAlign: 'center',
+  },
+});
 
 export default FindDisease;

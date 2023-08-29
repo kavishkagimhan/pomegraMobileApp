@@ -13,6 +13,7 @@ import ClimateHome from '../climate/ClimateHome';
 import SoilHome from '../soil/SoilHome';
 import FindDisease from '../diseases/FindDisease';
 import FindQuality from '../quality/FindQuality';
+import DiseaseResult from '../diseases/DiseaseResult';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -28,6 +29,7 @@ const HomeStack = ({navigation}) => (
     <Stack.Screen name="Quality" component={Quality} />
     <Stack.Screen name="Climate" component={ClimateHome} />
     <Stack.Screen name="Soil" component={SoilHome} />
+    <Stack.Screen name="DiseaseResult" component={DiseaseResult} />
   </Stack.Navigator>
 );
 

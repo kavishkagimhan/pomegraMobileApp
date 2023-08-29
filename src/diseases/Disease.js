@@ -37,15 +37,20 @@ export default function Disease() {
                 path: 'image',
             },
         }
-
+    
         launchImageLibrary(options, response => {
-            if (response.assets[0].uri) {
+            if (response.didCancel) {
+                console.log("User cancelled image selection");
+            } else if (response.error) {
+                console.log("Image selection error:", response.error);
+            } else if (response.assets && response.assets.length > 0) {
                 navigation.navigate('Find', { imageUri: response.assets[0].uri });
             } else {
-                console.log(error);
+                console.log("No image selected");
             }
         });
     };
+    
 
     return (
         <View className="h-screen">
