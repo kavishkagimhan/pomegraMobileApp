@@ -1,118 +1,53 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useContext, useState } from 'react';
+import { View, Text, TouchableOpacity, Image, TextInput } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
-
+import { AuthContext } from './AuthProvider';
+import farming from "../assets/farming.png"
+import Input from '../components/Input';
+import Button from '../components/Button';
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigation = useNavigation();
 
-    const handleLogin = () => {
-        // Perform login logic here
+    const { login } = useContext(AuthContext);
 
-        // Assuming successful login, navigate to Home
-        navigation.navigate('Home');
-    };
-    
-    const handleForgotPassword = () => {
-        // Navigate to ForgotPassword screen
-        navigation.navigate('Forgot');
-    };
 
-    const handleSignUp = () => {
-        // Navigate to SignUp screen
-        navigation.navigate('Signup');
-    };
     return (
-        <View style={styles.container}>
-            <Text style={styles.heading}>Login</Text>
+        <View className='items-center flex-1 w-screen h-screen' >
+            <Image source={farming} className="w-screen bg-cover h-[20vh]" />
+            <Text className="p-4 text-4xl font-bold text-primary">Login</Text>
             <TextInput
-                style={styles.input}
-                placeholder="Email"
+             className="px-2 py-1  text-black bg-white dark:text-black w-[80%] text-lg border border-primary rounded-md "
+                placeholder='Enter Email Address'
                 onChangeText={(text) => setEmail(text)}
                 value={email}
                 autoCapitalize="none"
-                className="border-2 border-red-500"
             />
             <TextInput
-                style={styles.input}
-                placeholder="Password"
-                onChangeText={(text) => setPassword(text)}
+             className="px-2 py-1  text-black bg-white dark:text-black w-[80%] text-lg border border-primary rounded-md "
+                placeholder='Enter Password'
                 value={password}
+                onChangeText={(text) => setPassword(text)}
                 secureTextEntry
             />
-            <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-                <Text style={styles.loginButtonText} onPress={handleLogin}>Login</Text>
+            <Button name='Login' onPress={() => login(email, password)} />
+            <TouchableOpacity className="w-[80%] px-2 py-1 bg-primary text-center h-12 items-center mt-6" onPress={() => login(email, password)}>
+                <Text className="text-lg font-bold text-white">Login</Text>
             </TouchableOpacity>
-            <Text style={styles.emailDisplay}>{email}</Text>
-            <View style={styles.linksContainer}>
-                <TouchableOpacity style={styles.linkButton} onPress={handleForgotPassword}>
-                    <Text style={styles.linkText}>Forgot Password?</Text>
+            <View className="flex-row gap-16 p-4">
+                <TouchableOpacity className="" onPress={() => navigation.navigate('Forgot')}>
+                    <Text className="text-lg font-semibold text-primary focus-within:underline">Forgot Password?</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.linkButton} onPress={handleSignUp}>
-                    <Text style={styles.linkText}>Sign Up</Text>
+                <TouchableOpacity className="" onPress={() => navigation.navigate('Signup')}>
+                    <Text className="text-lg font-semibold text-primary focus-within:underline">Sign Up</Text>
                 </TouchableOpacity>
             </View>
         </View>
     );
 };
 
-const styles = StyleSheet.create({
-    container: {
-        height: '100%',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#eed2d6',
-    },
-    heading: {
-        fontSize: 28,
-        fontWeight: 'bold',
-        marginBottom: 20,
-        color: 'red',
-    },
-    input: {
-        width: '80%',
-        height: 50,
-        borderColor: '#ccc',
-        borderWidth: 1,
-        borderRadius: 8,
-        paddingHorizontal: 16,
-        marginBottom: 20,
-        fontSize: 18,
-        backgroundColor: '#fff',
-        color: 'red',
-    },
-    loginButton: {
-        backgroundColor: '#007bff',
-        paddingVertical: 14,
-        paddingHorizontal: 24,
-        borderRadius: 8,
-        elevation: 2,
-    },
-    loginButtonText: {
-        color: 'white',
-        fontSize: 18,
-        fontWeight: 'bold',
-    },
-    emailDisplay: {
-        marginTop: 20,
-        fontSize: 16,
-        color: '#666',
-    },
-    linksContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        width: '80%',
-        marginTop: 10,
-    },
-    linkButton: {
-        paddingVertical: 10,
-    },
-    linkText: {
-        fontSize: 16,
-        color: '#007bff',
-    },
-});
+
 
 export default Login;
