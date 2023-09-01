@@ -39,7 +39,7 @@ const FindDisease = ({ route }) => {
           type: 'image/jpg',
         });
 
-        const backendURL = 'http://192.168.60.120:8000';
+        const backendURL = 'http://192.168.8.102:8000';
 
         const response = await fetch(`${backendURL}/predict`, {
           method: 'POST',
@@ -50,16 +50,19 @@ const FindDisease = ({ route }) => {
         if (responseData) {
           const validate = responseData.class_model_1;
           if (validate === "Diseases") {
-            navigation.navigate('DiseaseResult', { validate: validate, disease: responseData.class_model_2 });
-          } else {
-            navigation.navigate('DiseaseResult', { validate: validate, disease: "null" });
+            navigation.navigate('DiseaseResult', { validate: "Disease", disease: responseData.class_model_2, emoji: "emoji-sad" });
+          } else if (validate === "Helthy") {
+            navigation.navigate('DiseaseResult', { validate: "Healthy", disease: "null", emoji: "emoji-happy" });
+          }
+          else {
+            navigation.navigate('DiseaseResult', { validate: validate, disease: "null", emoji: "none" });
           }
         } else {
           setError('Invalid response from the server');
         }
 
       } catch (error) {
-        console.error('Error:', error);
+        console.log('Error:', error);
         setError('An error occurred while finding the disease.');
       } finally {
         setIsLoading(false);

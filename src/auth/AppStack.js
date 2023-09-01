@@ -14,15 +14,19 @@ import SoilHome from '../soil/SoilHome';
 import FindDisease from '../diseases/FindDisease';
 import FindQuality from '../quality/FindQuality';
 import DiseaseResult from '../diseases/DiseaseResult';
+import Npk from '../soil/Npk';
+import Soilmoisture from '../soil/Soilmoisture';
+import Soiltemprature from '../soil/Soiltemprature';
+import Fertilizers from '../soil/Fertilizers';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
 
 
-const HomeStack = ({navigation}) => (
+const HomeStack = ({ navigation }) => (
   <Stack.Navigator>
-    <Stack.Screen options={{headerShown:false}} name="Homea" component={Home} />
+    <Stack.Screen options={{ headerShown: false }} name="Homea" component={Home} />
     <Stack.Screen name="Disease" component={Disease} />
     <Stack.Screen name="Find" component={FindDisease} />
     <Stack.Screen name="FindQuality" component={FindQuality} />
@@ -30,6 +34,10 @@ const HomeStack = ({navigation}) => (
     <Stack.Screen name="Climate" component={ClimateHome} />
     <Stack.Screen name="Soil" component={SoilHome} />
     <Stack.Screen name="DiseaseResult" component={DiseaseResult} />
+    <Stack.Screen name="Npk" component={Npk} />
+    <Stack.Screen name="Moisture" component={Soilmoisture} />
+    <Stack.Screen name="Soil temperature" component={Soiltemprature} />
+    <Stack.Screen name="Fertilizers" component={Fertilizers} />
   </Stack.Navigator>
 );
 
@@ -51,7 +59,7 @@ const AppStack = () => {
 
   return (
     <Tab.Navigator
-      tabBarOptions={{
+      screenOptions={{
         activeTintColor: '#DE1B55',
         backgroundColor: '#DE1B55',
       }}>
@@ -65,6 +73,7 @@ const AppStack = () => {
             <MaterialCommunityIcons
               name="home-outline"
               color={color}
+              activeTintColor= '#DE1B55'
               size={35}
             />
           ),

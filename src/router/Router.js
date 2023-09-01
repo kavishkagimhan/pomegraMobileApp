@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 
 
-import { View, Text } from 'react-native'
+import { View, Text, StatusBar } from 'react-native'
 
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -64,7 +64,7 @@ const Router = () => {
         //     </Stack.Navigator> */}
         //     <AuthStack />
         // </NavigationContainer>
-        <NavigationContainer>
+        <NavigationContainer >
             {user ? <AppStack /> : <AuthStack />}
         </NavigationContainer>
 
