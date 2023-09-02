@@ -10,6 +10,7 @@ import Soil from 'react-native-vector-icons/AntDesign';
 import axios from 'axios';
 import Foorcast from './climate/Foorcast';
 
+
 const Home = () => {
 
   const [greeting, setGreeting] = useState();
@@ -37,7 +38,7 @@ const Home = () => {
 
   const getClimate = async () => {
     try {
-      const response = await axios.get(`http://192.168.8.100/api/data/DH0001`);
+      const response = await axios.get(`http://192.168.226.130/api/data/DH0001`);
       if (response) {
         setHumidity(response.data.humidity);
         setTemperature(response.data.temperature);
@@ -74,87 +75,87 @@ const Home = () => {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
-        <StatusBar backgroundColor="transparent" barStyle="dark-content" />
-    <View className="w-screen h-screen bg-[#ebeaea]" >
-      <ScrollView
-        contentContainerStyle={{ flexGrow: 1 }}
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }
-      >
-        <View className="">
-          <Image source={img} className="w-screen h-[30vh] rounded-b-[50px] bg-cover " />
-          <Text className="text-3xl text-center text-white -mt-36">{greeting}</Text>
-        </View>
+      <StatusBar backgroundColor="transparent" barStyle="dark-content" />
+      <View className="w-screen h-screen bg-[#ebeaea]" >
+        <ScrollView
+          contentContainerStyle={{ flexGrow: 1 }}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+        >
+          <View className="">
+            <Image source={img} className="w-screen h-[30vh] rounded-b-[50px] bg-cover " />
+            <Text className="text-3xl text-center text-white -mt-36">{greeting}</Text>
+          </View>
 
-        <View className="flex-row items-center justify-center w-screen gap-3 mx-auto mt-16">
-          <View className="flex items-center text-black">
-            <TouchableOpacity onPress={() =>
-              navigation.navigate('Quality')
-            } style={{ elevation: 10 }}>
-              <LinearGradient colors={['#f87171', '#fdba74']} className="flex items-center justify-center h-[70px]  rounded-lg w-[70px] shadow" >
-                <MaterialCommunityIcons name="fruit-pineapple" color="white" size={50} />
-              </LinearGradient>
-            </TouchableOpacity>
-            <Text className="font-light text-black">Quality</Text>
+          <View className="flex-row items-center justify-center w-screen gap-3 mx-auto mt-16">
+            <View className="flex items-center text-black">
+              <TouchableOpacity onPress={() =>
+                navigation.navigate('Quality')
+              } style={{ elevation: 10 }}>
+                <LinearGradient colors={['#f87171', '#fdba74']} className="flex items-center justify-center h-[70px]  rounded-lg w-[70px] shadow" >
+                  <MaterialCommunityIcons name="fruit-pineapple" color="white" size={50} />
+                </LinearGradient>
+              </TouchableOpacity>
+              <Text className="font-light text-black">Quality</Text>
+            </View>
+            <View className="flex items-center text-black">
+              <TouchableOpacity onPress={() =>
+                navigation.navigate('Disease')
+              } style={{ elevation: 10 }}>
+                <LinearGradient colors={['#059669', '#6ee7b7']} className="flex items-center justify-center h-[70px]  rounded-lg w-[70px] shadow" >
+                  <MaterialCommunityIcons name="leaf" color="white" size={50} />
+                </LinearGradient>
+              </TouchableOpacity>
+              <Text className="font-light text-black">Disease</Text>
+            </View>
+            <View className="flex items-center text-black">
+              <TouchableOpacity onPress={() =>
+                navigation.navigate('Climate')
+              } style={{ elevation: 10 }}>
+                <LinearGradient colors={['#2563eb', '#38bdf8']} className="flex items-center justify-center h-[70px]  rounded-lg w-[70px] shadow" >
+                  <Cloud name="cloud-rain" color="white" size={50} />
+                </LinearGradient>
+              </TouchableOpacity>
+              <Text className="font-light text-black">Climate</Text>
+            </View>
+            <View className="flex items-center text-black" style={{ elevation: 10 }}>
+              <TouchableOpacity onPress={() =>
+                navigation.navigate('Soil')
+              }>
+                <LinearGradient colors={['#be123c', '#fdba74']} className="flex items-center justify-center h-[70px]  rounded-lg w-[70px] shadow" >
+                  <Soil name="caretdown" color="white" size={50} />
+                </LinearGradient>
+              </TouchableOpacity>
+              <Text className="font-light text-black">Soil</Text>
+            </View>
           </View>
-          <View className="flex items-center text-black">
-            <TouchableOpacity onPress={() =>
-              navigation.navigate('Disease')
-            } style={{ elevation: 10 }}>
-              <LinearGradient colors={['#059669', '#6ee7b7']} className="flex items-center justify-center h-[70px]  rounded-lg w-[70px] shadow" >
-                <MaterialCommunityIcons name="leaf" color="white" size={50} />
-              </LinearGradient>
-            </TouchableOpacity>
-            <Text className="font-light text-black">Disease</Text>
-          </View>
-          <View className="flex items-center text-black">
-            <TouchableOpacity onPress={() =>
-              navigation.navigate('Climate')
-            } style={{ elevation: 10 }}>
-              <LinearGradient colors={['#2563eb', '#38bdf8']} className="flex items-center justify-center h-[70px]  rounded-lg w-[70px] shadow" >
-                <Cloud name="cloud-rain" color="white" size={50} />
-              </LinearGradient>
-            </TouchableOpacity>
-            <Text className="font-light text-black">Climate</Text>
-          </View>
-          <View className="flex items-center text-black" style={{ elevation: 10 }}>
-            <TouchableOpacity onPress={() =>
-              navigation.navigate('Soil')
-            }>
-              <LinearGradient colors={['#be123c', '#fdba74']} className="flex items-center justify-center h-[70px]  rounded-lg w-[70px] shadow" >
-                <Soil name="caretdown" color="white" size={50} />
-              </LinearGradient>
-            </TouchableOpacity>
-            <Text className="font-light text-black">Soil</Text>
-          </View>
-        </View>
 
-        <View className="flex-row justify-between w-screen gap-1 px-4 mx-auto max-w-[80%] py-8 ">
-          <View className="flex items-center justify-center p-4 bg-white rounded-lg w-36 h-[150px]">
-            {temperature !== '' ? (
-              <>
-                <Text className="text-3xl font-semibold text-primary">{temperature}°C</Text>
-                <Text className="text-lg text-center text-gray-500">Current Temperature</Text>
-              </>
-            ) : (
-              <Text className="text-lg font-semibold text-gray-500">Device Offline</Text>
-            )}
+          <View className="flex-row justify-between w-screen gap-1 px-4 mx-auto max-w-[80%] py-8 ">
+            <View className="flex items-center justify-center p-4 bg-white rounded-lg w-36 h-[150px]">
+              {temperature !== '' ? (
+                <>
+                  <Text className="text-3xl font-semibold text-primary">{temperature}°C</Text>
+                  <Text className="text-lg text-center text-gray-500">Current Temperature</Text>
+                </>
+              ) : (
+                <Text className="text-lg font-semibold text-gray-500">Device Offline</Text>
+              )}
+            </View>
+            <View className="flex items-center justify-center p-4 bg-white rounded-lg w-36 h-[150px]">
+              {humidity !== '' ? (
+                <>
+                  <Text className="text-3xl font-semibold text-primary">{humidity}%</Text>
+                  <Text className="text-lg text-center text-gray-500">Current Humidity</Text>
+                </>
+              ) : (
+                <Text className="text-lg font-semibold text-gray-500">Device Offline</Text>
+              )}
+            </View>
           </View>
-          <View className="flex items-center justify-center p-4 bg-white rounded-lg w-36 h-[150px]">
-            {humidity !== '' ? (
-              <>
-                <Text className="text-3xl font-semibold text-primary">{humidity}%</Text>
-                <Text className="text-lg text-center text-gray-500">Current Humidity</Text>
-              </>
-            ) : (
-              <Text className="text-lg font-semibold text-gray-500">Device Offline</Text>
-            )}
-          </View>
-        </View>
-        <Foorcast/>
-      </ScrollView>  
-    </View>
+          <Foorcast />
+        </ScrollView>
+      </View>
     </SafeAreaView>
   );
 };
