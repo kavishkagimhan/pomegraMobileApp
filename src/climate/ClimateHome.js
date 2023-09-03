@@ -18,7 +18,7 @@ const ClimateHome = () => {
 
   const getClimate = async () => {
     try {
-      const response = await axios.get(`http://192.168.226.130/api/data/DH0001`);
+      const response = await axios.get(`http://192.168.119.130/api/data/DH0001`);
       if (response) {
         setHumidity(response.data.humidity);
         setTemperature(response.data.temperature);

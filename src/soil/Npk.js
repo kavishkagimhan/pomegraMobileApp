@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, ImageBackground } from 'react-native';
 import axios from 'axios';
+import Soil from "../assets/soil.png";
 
 const Npk = () => {
   const [nValue, setNValue] = useState('');
@@ -72,7 +73,9 @@ const Npk = () => {
   };
 
   return (
-    <View className="w-screen h-screen">
+    <ImageBackground
+      source={Soil}
+      className="w-screen h-screen">
       <Text className="p-4 text-2xl font-semibold text-center text-primary">Enter NPK Levels</Text>
       <View className="flex flex-row items-center justify-center mt-4">
         <Text className="text-black">N : </Text>
@@ -128,7 +131,7 @@ const Npk = () => {
           <Text className="text-lg font-bold text-white">Refresh</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </ImageBackground>
   );
 };
 

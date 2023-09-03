@@ -46,7 +46,6 @@ const FindQuality = ({ route }) => {
           body: data,
         });
         const responseData = await response.json();
-        console.log(responseData);
         if (responseData) {
           const validate = responseData.class;
           if (validate === "Bad Quality") {

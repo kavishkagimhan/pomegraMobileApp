@@ -20,6 +20,7 @@ import Soiltemprature from '../soil/Soiltemprature';
 import Fertilizers from '../soil/Fertilizers';
 import Notification from '../climate/Notification';
 import QualityResult from '../quality/QualityResult';
+import Settings from '../screens/Settings';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -42,6 +43,7 @@ const HomeStack = ({ navigation }) => (
     <Stack.Screen name="Soil temperature" component={Soiltemprature} />
     <Stack.Screen name="Fertilizers" component={Fertilizers} />
     <Stack.Screen name="Notifications" component={Notification} />
+    <Stack.Screen name="Settings" component={Settings} />
   </Stack.Navigator>
 );
 
@@ -114,8 +116,8 @@ const AppStack = () => {
         })}
       />
       <Tab.Screen
-        name="Di"
-        component={Disease}
+        name="settings"
+        component={Settings}
         options={({ route }) => ({
           tabBarLabel: 'Setting',
           headerShown: false,
