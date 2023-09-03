@@ -8,9 +8,7 @@ const SoilHome = () => {
 
   const navigation = useNavigation();
 
-  const Test = () => {
-    console.log('Testing');
-  }
+  
 
   return (
     <View className="bg-primary">

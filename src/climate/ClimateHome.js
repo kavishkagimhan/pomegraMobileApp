@@ -8,15 +8,15 @@ import Chart from './Chart';
 import { AuthContext } from '../auth/AuthProvider';
 
 
-const ClimateHome = () => {
+const ClimateHome = ({route}) => {
 
   const [humidity, setHumidity] = useState('');
   const [temperature, setTemperature] = useState('');
   const { user } = useContext(AuthContext);
+  const { deviceId } = route.params;
 
 
-
-  const getClimate = async () => {
+  const getClimate = async (deviceId) => {
     try {
       const response = await axios.get(`http://192.168.119.130/api/data/DH0001`);
       if (response) {
@@ -30,10 +30,10 @@ const ClimateHome = () => {
     }
   };
 
-  useEffect(() => {
+  useEffect((deviceId) => {
 
-    getClimate(); // Initial call
-
+    getClimate(deviceId); // Initial call
+    console.log(deviceId)
     const interval = setInterval(() => {
       getClimate(); // Fetch climate data every 5 seconds
     }, 10000); // Interval in milliseconds (5 seconds)

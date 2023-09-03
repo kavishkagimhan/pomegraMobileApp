@@ -8,7 +8,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Cloud from 'react-native-vector-icons/Feather';
 import Soil from 'react-native-vector-icons/AntDesign';
 import axios from 'axios';
-import Foorcast from './climate/Foorcast';
+import firestore from '@react-native-firebase/firestore';
 
 
 const Home = () => {
@@ -17,6 +17,7 @@ const Home = () => {
   const { user } = useContext(AuthContext);
   const [humidity, setHumidity] = useState('');
   const [temperature, setTemperature] = useState('');
+  const [deviceId, setDeviceId] = useState('DH0001');
   const [refreshing, setRefreshing] = useState(false);
   const navigation = useNavigation();
 
@@ -36,7 +37,29 @@ const Home = () => {
   };
 
 
-  const getClimate = async () => {
+  const getDeviceID = async () => {
+    try {
+      const userDocRef = firestore().collection('devices').doc(user.uid);
+      const userDocSnapshot = await userDocRef.get();
+      if (userDocSnapshot.exists) {
+        const userData = userDocSnapshot.data();
+        if (userData.deviceId) {
+          //setDeviceId(userData.deviceId);
+          getClimate(); // Call getClimate after setting the deviceId
+        } else {
+          console.log('Device ID not found in user data');
+        }
+      } else {
+        console.log('User document not found in Firestore');
+      }
+    } catch (error) {
+      console.error('Error getting device ID:', error);
+    }
+  };
+
+
+
+  const getClimate = async (deviceId) => {
     try {
       const response = await axios.get(`http://192.168.119.130/api/data/DH0001`);
       if (response) {
@@ -54,6 +77,7 @@ const Home = () => {
   // Call handleGreeting when the component mounts to set the initial greeting
   useEffect(() => {
     handleGreeting();
+    getDeviceID();
     getClimate(); // Initial call
 
     const interval = setInterval(() => {
@@ -111,7 +135,7 @@ const Home = () => {
             </View>
             <View className="flex items-center text-black">
               <TouchableOpacity onPress={() =>
-                navigation.navigate('Climate')
+                navigation.navigate('Climate', { devideID: {deviceId}})
               } style={{ elevation: 10 }}>
                 <LinearGradient colors={['#2563eb', '#38bdf8']} className="flex items-center justify-center h-[70px]  rounded-lg w-[70px] shadow" >
                   <Cloud name="cloud-rain" color="white" size={50} />
@@ -130,7 +154,14 @@ const Home = () => {
               <Text className="font-light text-black">Soil</Text>
             </View>
           </View>
-
+          <View className="items-center">
+            <TouchableOpacity className="mt-8" onPress={() =>
+              navigation.navigate('Pest and Disease Forcast')} >
+              <LinearGradient style={{ elevation: 10 }} colors={['#059669', '#34d399']} className="px-4 py-2 rounded-xl w-[250px] items-center">
+                <Text className="text-lg text-white">Pest And Disease Forcast</Text>
+              </LinearGradient>
+            </TouchableOpacity>
+          </View>
           <View className="flex-row justify-between w-screen gap-1 px-4 mx-auto max-w-[80%] py-8 ">
             <View className="flex items-center justify-center p-4 bg-white rounded-lg w-36 h-[150px]">
               {temperature !== '' ? (
@@ -153,7 +184,7 @@ const Home = () => {
               )}
             </View>
           </View>
-          <Foorcast />
+
         </ScrollView>
       </View>
     </SafeAreaView>

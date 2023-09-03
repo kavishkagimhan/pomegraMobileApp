@@ -21,6 +21,8 @@ import Fertilizers from '../soil/Fertilizers';
 import Notification from '../climate/Notification';
 import QualityResult from '../quality/QualityResult';
 import Settings from '../screens/Settings';
+import DiseaseForcast from '../climate/DiseaseForcast';
+import SpreadResult from '../climate/SpreadResult';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -44,6 +46,8 @@ const HomeStack = ({ navigation }) => (
     <Stack.Screen name="Fertilizers" component={Fertilizers} />
     <Stack.Screen name="Notifications" component={Notification} />
     <Stack.Screen name="Settings" component={Settings} />
+    <Stack.Screen name="Pest and Disease Forcast" component={DiseaseForcast} />
+    <Stack.Screen name="Spread Result" component={SpreadResult} />
   </Stack.Navigator>
 );
 
