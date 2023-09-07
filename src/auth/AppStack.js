@@ -18,6 +18,11 @@ import Npk from '../soil/Npk';
 import Soilmoisture from '../soil/Soilmoisture';
 import Soiltemprature from '../soil/Soiltemprature';
 import Fertilizers from '../soil/Fertilizers';
+import Notification from '../climate/Notification';
+import QualityResult from '../quality/QualityResult';
+import Settings from '../screens/Settings';
+import DiseaseForcast from '../climate/DiseaseForcast';
+import SpreadResult from '../climate/SpreadResult';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -34,10 +39,15 @@ const HomeStack = ({ navigation }) => (
     <Stack.Screen name="Climate" component={ClimateHome} />
     <Stack.Screen name="Soil" component={SoilHome} />
     <Stack.Screen name="DiseaseResult" component={DiseaseResult} />
+    <Stack.Screen name="QualityResult" component={QualityResult} />
     <Stack.Screen name="Npk" component={Npk} />
     <Stack.Screen name="Moisture" component={Soilmoisture} />
     <Stack.Screen name="Soil temperature" component={Soiltemprature} />
     <Stack.Screen name="Fertilizers" component={Fertilizers} />
+    <Stack.Screen name="Notifications" component={Notification} />
+    <Stack.Screen name="Settings" component={Settings} />
+    <Stack.Screen name="Pest and Disease Forcast" component={DiseaseForcast} />
+    <Stack.Screen name="Spread Result" component={SpreadResult} />
   </Stack.Navigator>
 );
 
@@ -73,21 +83,21 @@ const AppStack = () => {
             <MaterialCommunityIcons
               name="home-outline"
               color={color}
-              activeTintColor= '#DE1B55'
+              activeTintColor='#DE1B55'
               size={35}
             />
           ),
         })}
       />
       <Tab.Screen
-        name="Di"
-        component={Disease}
+        name="notification"
+        component={Notification}
         options={({ route }) => ({
-          tabBarLabel: 'Setting',
+          tabBarLabel: 'Notification',
           headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <Ionicons
-              name="setting"
+              name="notification"
               color={color}
               size={30}
             />
@@ -109,6 +119,22 @@ const AppStack = () => {
           ),
         })}
       />
+      <Tab.Screen
+        name="settings"
+        component={Settings}
+        options={({ route }) => ({
+          tabBarLabel: 'Setting',
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons
+              name="setting"
+              color={color}
+              size={30}
+            />
+          ),
+        })}
+      />
+
     </Tab.Navigator>
   )
 }

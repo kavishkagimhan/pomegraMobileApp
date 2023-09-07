@@ -44,13 +44,13 @@ const DiseaseResult = ({ route }) => {
         {validate !== undefined && (
           <Text className="justify-center text-2xl text-center text-white">You Uploaded {validate} Image</Text>
         )}
-        {validate !== 'healthy' && validate !== "undefined" && (
+        {validate !== 'Healthy' && validate !== "Undefined" && (
           <Text className="p-4 text-xl text-center text-white jjustify-center">This Disease is "<Text className="text-xl font-bold">{disease}</Text>"</Text>
         )}
         <HAppy name={emoji} color="white" size={80} />
       </View>
       <View className="items-center mt-6 ">
-        {validate !== 'healthy' && validate !== "undefined" && (
+        {validate !== 'Healthy' && validate !== "Undefined" && (
           <TouchableOpacity className="mt-4" onPress={handleGetTreatment}>
             <View style={{ elevation: 10 }} className="bg-white px-4 py-2 rounded-2xl w-[250px] items-center">
               <Text className="text-lg text-green-800">Get Treatment</Text>
