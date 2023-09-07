@@ -39,7 +39,7 @@ const FindDisease = ({ route }) => {
           type: 'image/jpg',
         });
 
-        const backendURL = 'http://192.168.226.107:8000';
+        const backendURL = 'http://192.168.73.107:8000';
 
         const response = await fetch(`${backendURL}/predict`, {
           method: 'POST',

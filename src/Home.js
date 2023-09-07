@@ -61,7 +61,7 @@ const Home = () => {
 
   const getClimate = async (deviceId) => {
     try {
-      const response = await axios.get(`http://192.168.119.130/api/data/DH0001`);
+      const response = await axios.get(`http://192.168.73.130/api/data/DH0001`);
       if (response) {
         setHumidity(response.data.humidity);
         setTemperature(response.data.temperature);
@@ -82,7 +82,7 @@ const Home = () => {
 
     const interval = setInterval(() => {
       getClimate(); // Fetch climate data every 5 seconds
-    }, 10000); // Interval in milliseconds (5 seconds)
+    }, 2000); // Interval in milliseconds (5 seconds)
 
     return () => {
       clearInterval(interval); // Clear interval when component unmounts

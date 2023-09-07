@@ -18,7 +18,7 @@ const ClimateHome = ({route}) => {
 
   const getClimate = async (deviceId) => {
     try {
-      const response = await axios.get(`http://192.168.119.130/api/data/DH0001`);
+      const response = await axios.get(`http://192.168.73.130/api/data/DH0001`);
       if (response) {
         setHumidity(response.data.humidity);
         setTemperature(response.data.temperature);
@@ -72,7 +72,6 @@ const ClimateHome = ({route}) => {
           </View>
         </View>
         <View className="items-center w-screen mt-24">
-          <Chart />
           <Chart />
         </View>
 

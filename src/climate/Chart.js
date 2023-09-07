@@ -10,7 +10,7 @@ const Chart = () => {
   const [temperatureData, setTemperatureData] = useState([]);
   const [humidityData, setHumidityData] = useState([]);
   const [climate, setClimateData] = useState([]);
-  const [hourArray, setHourArray] = useState([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24]);
+  const [hourArray, setHourArray] = useState([]);
 
   const getClimateData = async () => {
     try {
@@ -18,12 +18,12 @@ const Chart = () => {
         .collection('weatherData')
         .doc(user.uid) // Use the user's UID as the document ID
         .get();
-  
+
       if (weatherDataSnapshot.exists) {
         const weatherData = weatherDataSnapshot.data();
         setClimateData(weatherData.climateData)
         // Assuming weatherData has temperature and humidity properties
-       // console.log(weatherData.climateData)
+        // console.log(weatherData.climateData)
       } else {
         console.log('Weather data not found for user:', user.uid);
         // Handle the case where weather data is not found for the user
@@ -95,13 +95,34 @@ const Chart = () => {
   };
 
   return (
-    <View >
-      <Text className="text-lg font-semibold text-black">Last 24 Hours Temperature</Text>
+    <View>
+      <View >
+        <Text className="text-lg font-semibold text-black">Last 24 Hours Temperature</Text>
+        <LineChart
+          data={data}
+          width={350}
+          height={180}
+          yAxisSuffix="c"
+          withInnerLines={false}
+          withOuterLines={false}
+          chartConfig={{
+            backgroundColor: 'white',
+            backgroundGradientFrom: 'white',
+            backgroundGradientTo: 'white',
+            decimalPlaces: 2, // Number of decimal places for labels
+            color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`, // Label color
+            yAxisInterval: 10, // Set the y-axis interval to 10 (0 to 100 in increments of 10)
+          }}
+          style={styles.chart}
+        />
+      </View>
+      <View >
+      <Text className="text-lg font-semibold text-black">Last 24 Hours Humidity</Text>
       <LineChart
         data={data}
         width={350}
         height={180}
-        yAxisSuffix="c"
+        yAxisSuffix="%"
         withInnerLines={false}
         withOuterLines={false}
         chartConfig={{
@@ -115,6 +136,8 @@ const Chart = () => {
         style={styles.chart}
       />
     </View>
+    </View>
+
   );
 };
 

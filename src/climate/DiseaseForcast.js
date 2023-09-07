@@ -2,6 +2,8 @@ import { View, Text, Image, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState, useContext } from 'react';
 import Aphid from "../assets/aphid.jpg"
 import Whiteflie from '../assets/whiteflies.jpg'
+import Bacterial from '../assets/bacterial.jpg'
+import Antraconos from '../assets/antraconos.jpg'
 import { AuthContext } from '../auth/AuthProvider';
 import firestore from '@react-native-firebase/firestore';
 import axios from 'axios';
@@ -20,7 +22,8 @@ const DiseaseForcast = () => {
     const [temperatureData, setTemperatureData] = useState([]);
     const [humidityData, setHumidityData] = useState([]);
     const [climate, setClimateData] = useState([]);
-    const [hourArray, setHourArray] = useState([1, 1, 1, 1, 1, 1, 1, 1,]);
+    const [hourArray, setHourArray] = useState([]);
+    const backend = "http://192.168.73.120:8005/"
 
     const getClimateData = async () => {
         try {
@@ -44,7 +47,18 @@ const DiseaseForcast = () => {
         }
     };
 
+    
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            getClimateData();
+        }, 2000);
 
+        // Clear the interval when the component unmounts
+        return () => clearInterval(intervalId);
+    }, [user]);
+
+
+    
     useEffect(() => {
         // Check if 'climate' is defined and not empty
         if (climate && Object.keys(climate).length > 0) {
@@ -119,11 +133,67 @@ const DiseaseForcast = () => {
         };
         try {
             // Send a POST request to the API with the JSON data
-            const response = await axios.post('http://192.168.119.120:8005/predict', climateData);
+            const response = await axios.post(`${backend}predict_aphid`, climateData);
 
             // Handle the response from the API (replace this with your own logic)
             const result = response.data; // Assuming the API returns the result in JSON format
-            navigation.navigate('Spread Result', { status: result.status, name:"Aphid", image: {Aphid} });
+            navigation.navigate('Spread Result', { status: result.status, name:"Aphid" });
+            console.log(result.status);
+        } catch (error) {
+            console.error('Error sending request:', error);
+        }
+
+    }
+    const whiteFliesForecast = async () => {
+        const climateData = {
+            temperature: avgTemp,
+            humidity: avgHumidity,
+        };
+        try {
+            // Send a POST request to the API with the JSON data
+            const response = await axios.post(`${backend}predict_whiteflies`, climateData);
+
+            // Handle the response from the API (replace this with your own logic)
+            const result = response.data; // Assuming the API returns the result in JSON format
+            navigation.navigate('Spread Result', { status: result.status, name:"Whiteflies"});
+            console.log(result.status);
+        } catch (error) {
+            console.error('Error sending request:', error);
+        }
+
+    }
+
+    const antraconosForecast = async () => {
+        const climateData = {
+            temperature: avgTemp,
+            humidity: avgHumidity,
+        };
+        try {
+            // Send a POST request to the API with the JSON data
+            const response = await axios.post(`${backend}predict_antraconos`, climateData);
+
+            // Handle the response from the API (replace this with your own logic)
+            const result = response.data; // Assuming the API returns the result in JSON format
+            navigation.navigate('Spread Result', { status: result.status, name:"Anthracnose" });
+            console.log(result.status);
+        } catch (error) {
+            console.error('Error sending request:', error);
+        }
+
+    }
+
+    const bacterialForecast = async () => {
+        const climateData = {
+            temperature: avgTemp,
+            humidity: avgHumidity,
+        };
+        try {
+            // Send a POST request to the API with the JSON data
+            const response = await axios.post(`${backend}predict_bacterial_blight`, climateData);
+
+            // Handle the response from the API (replace this with your own logic)
+            const result = response.data; // Assuming the API returns the result in JSON format
+            navigation.navigate('Spread Result', { status: result.status, name:"Bacterial Blight" });
             console.log(result.status);
         } catch (error) {
             console.error('Error sending request:', error);
@@ -178,7 +248,7 @@ const DiseaseForcast = () => {
                                 <Text className="font-bold text-center text-black">Aphid</Text>
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={whiteFliesForecast}>
                             <View className="p-2 bg-white rounded-md" style={{ elevation: 10 }}>
                                 <Image className="w-[120px] h-[120px] rounded-md" source={Whiteflie} />
                                 <Text className="font-bold text-center text-black">Whiteflies</Text>
@@ -186,16 +256,16 @@ const DiseaseForcast = () => {
                         </TouchableOpacity>
                     </View>
                     <View className="flex-row gap-2 mt-1">
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={antraconosForecast}>
                             <View className="p-2 bg-white rounded-md" style={{ elevation: 10 }}>
-                                <Image className="w-[120px] h-[120px] rounded-md" source={Aphid} />
-                                <Text className="font-bold text-center text-black">Aphid</Text>
+                                <Image className="w-[120px] h-[120px] rounded-md" source={Antraconos} />
+                                <Text className="font-bold text-center text-black">Anthracnose</Text>
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={bacterialForecast}>
                             <View className="p-2 bg-white rounded-md" style={{ elevation: 10 }}>
-                                <Image className="w-[120px] h-[120px] rounded-md" source={Aphid} />
-                                <Text className="font-bold text-center text-black">Aphid</Text>
+                                <Image className="w-[120px] h-[120px] rounded-md" source={Bacterial} />
+                                <Text className="font-bold text-center text-black">Bacterial Blight</Text>
                             </View>
                         </TouchableOpacity>
                     </View>

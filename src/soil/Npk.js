@@ -51,7 +51,7 @@ const Npk = () => {
 
     try {
       // Send a POST request to the API with the JSON data
-      const response = await axios.post('http://192.168.8.100:8005/suggest-fertilizers', npkData);
+      const response = await axios.post('http://192.168.73.120:8005/suggest-fertilizers', npkData);
 
       // Handle the response from the API (replace this with your own logic)
       const result = response.data; // Assuming the API returns the result in JSON format
